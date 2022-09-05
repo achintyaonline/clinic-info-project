@@ -1,0 +1,27 @@
+version: '2'
+services:
+  clinic-service-app:
+    depends_on:
+      -   mongodb
+    container_name: clinic-service-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: clinic-service-app:latest
+    ports:
+      - 8080:8080
+    networks:
+      - spring-cloud-network
+  mongodb:
+    container_name: mongodb
+    image: mongo
+    environment:
+      - PUID=1000
+      - PGID=1000
+    ports:
+      - 27017:27017
+    networks:
+      - spring-cloud-network
+networks:
+  spring-cloud-network:
+    driver: bridge
